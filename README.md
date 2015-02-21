@@ -16,6 +16,8 @@ Download the data, from the provided [link](https://d396qusza40orc.cloudfront.ne
 
 This script makes use of the ‘reshape2’ package to tidy the data.  Before running the script, make sure that the ‘reshape2’ package is installed.
 
+You can read more about the ‘reshape2’ package [here](http://cran.r-project.org/web/packages/reshape2/index.html).
+
 ### Check if ‘reshape2’ installed
 
 Run the following:
@@ -42,7 +44,7 @@ Run the following:
 
 ### Example
 
-```
+```R
 > run_analysis()
 Starting analysis of wearable data...
 Reading in the data sets...

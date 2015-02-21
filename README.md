@@ -12,7 +12,7 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 
 ## Requirements
 
-Download the data, from the provided [link](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip), and unzip to a directory named ‘UCI HAR Dataset’. Maintain the folder structure of the unzipped directory.
+Download the data, from the provided [link](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip), and unzip to a directory named ‘UCI HAR Dataset’ in your working directory. Maintain the folder structure of the unzipped directory.
 
 This script makes use of the ‘reshape2’ package to tidy the data.  Before running the script, make sure that the ‘reshape2’ package is installed.
 

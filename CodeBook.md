@@ -14,6 +14,7 @@ These signals were used to estimate variables of the feature vector for each pat
 ## Transformation
 
 To tidy the data set the following steps are performed: 
+
 1. Read in the train and test data set. 
 2. Subset the train and test data sets to contain only the Mean and Standard deviations. This is determined by 'mean()' or 'std()' in the features names.
 3. Merge the train and test data sets. 

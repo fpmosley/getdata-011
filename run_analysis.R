@@ -17,7 +17,7 @@
 #   5. Tidy data set with the average of each variable for each activity and
 #   each subject.
 
-run_analysis <- function() {
+run_analysis <- function(outfile="tidyData.txt") {
     readSetData <- function (set_name) {
         # Check that directory "UCI HAR Dataset" exists
         if (!file.exists("UCI HAR Dataset")) {
@@ -73,114 +73,6 @@ run_analysis <- function() {
         cbind(subjects, activities, measurements)
     }
     
-    readTrainData <- function () {
-        # Check that directory "UCI HAR Dataset" exists
-        if (!file.exists("UCI HAR Dataset")) {
-            stop("Samsung data needs to be available in the working directory in an 
-             unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Read in the Features
-        if (file.exists("./UCI HAR Dataset/features.txt")) {
-            features <- read.table("./UCI HAR Dataset/features.txt", 
-                                   col.names=c("ID", "Measurement"))
-        } else {
-            stop("Training set features are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Read in the Training Set Data
-        
-        # Read in the Training Set measurements
-        if (file.exists("./UCI HAR Dataset/train/X_train.txt")) {
-            train_measurements <- read.table("./UCI HAR Dataset/train/X_train.txt", 
-                                             col.names=features$Measurement)
-        } else {
-            stop("Training set measurements are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Subset the Training Set to get only the means and standard deviations
-        # names of subset columns required
-        mean_std_data_cols <- grep(".*mean\\(\\)|.*std\\(\\)", features$Measurement)
-        train_measurements <- train_measurements[,mean_std_data_cols]
-        
-        # Read in the Training Set activities
-        if (file.exists("./UCI HAR Dataset/train/y_train.txt")) {
-            train_activities <- read.table("./UCI HAR Dataset/train/y_train.txt", 
-                                           col.names=c("Activity"))
-        } else {
-            stop("Training set activities are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Read in the Training Set subjects
-        if (file.exists("./UCI HAR Dataset/train/subject_train.txt")) {
-            train_subjects <- read.table("./UCI HAR Dataset/train/subject_train.txt", 
-                                         col.names=c("Subject"))
-        } else {
-            stop("Training set activities are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Combine the training set
-        cbind(train_subjects, train_activities, train_measurements)
-    }
-    
-    readTestData <- function() {
-        # Check that directory "UCI HAR Dataset" exists
-        if (!file.exists("UCI HAR Dataset")) {
-            stop("Samsung data needs to be available in the working directory in an 
-             unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Read in the Features
-        if (file.exists("./UCI HAR Dataset/features.txt")) {
-            features <- read.table("./UCI HAR Dataset/features.txt", 
-                                   col.names=c("ID", "Measurement"))
-        } else {
-            stop("Training set features are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        ###### Read in the Test Set Data
-        
-        # Read in the Test Set measurements
-        if (file.exists("./UCI HAR Dataset/test/X_test.txt")) {
-            test_measurements <- read.table("./UCI HAR Dataset/test/X_test.txt", 
-                                            col.names=features$Measurement)
-        } else {
-            stop("Test set measurements are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Subset the Test Set to get only the means and standard deviations
-        # names of subset columns required
-        mean_std_data_cols <- grep(".*mean\\(\\)|.*std\\(\\)", features$Measurement)
-        test_measurements <- test_measurements[,mean_std_data_cols]
-        
-        # Read in the Test Set activities
-        if (file.exists("./UCI HAR Dataset/test/y_test.txt")) {
-            test_activities <- read.table("./UCI HAR Dataset/test/y_test.txt", 
-                                          col.names=c("Activity"))
-        } else {
-            stop("Test set activities are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Read in the Test Set subjects
-        if (file.exists("./UCI HAR Dataset/test/subject_test.txt")) {
-            test_subjects <- read.table("./UCI HAR Dataset/test/subject_test.txt", 
-                                        col.names=c("Subject"))
-        } else {
-            stop("Test set activities are not available in the working 
-              directory in the unzipped 'UCI HAR Dataset' folder")
-        }
-        
-        # Combine the test set
-        cbind(test_subjects, test_activities, test_measurements)
-    }
-    
     mergeData <- function (x, y) {
         ##### Merge the data sets
         
@@ -212,16 +104,18 @@ run_analysis <- function() {
         dcast(melted_data, Subject + Activity ~ variable, mean)
     }
     
-    print("Assumption is made that the data files from the \"UCI HAR Dataset\" are available in the current working directory with the same file structure as in the downloaded archive.")
-    print("  Data Files:")
-    print("    archive: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip")
-    print("    description: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones")
     
-    train_set <- readSetData("train")
-    test_set <- readSetData("test")
-    merged_set <- mergeData(train_set, test_set)
-    complete_set <- applyActivityLabels(merged_set)
-    tidy_data <- tidyData(complete_set)
-    write.table(tidy_data, "tidyData.txt", row.names = FALSE)
-    print("The Tidy Data has been ouput to 'tidyData.txt'.")
+    cat("Starting analysis of wearable data...\n")
+    cat("Reading in the data sets...\n")
+    train_set <- readSetData("train") # Read in the training set
+    test_set <- readSetData("test") # Read in the test set
+    cat("Merging the data...\n")
+    merged_set <- mergeData(train_set, test_set) # Merge the sets of data
+    complete_set <- applyActivityLabels(merged_set) # Apply activity labels
+    cat("Tidying the data...\n")
+    tidy_data <- tidyData(complete_set) # Reshape the data
+    
+    # Output the tidy data to the output file
+    write.table(tidy_data, outfile, row.names = FALSE)
+    cat("The Tidy Data has been output to '", outfile, "'.\n", sep="")
 }

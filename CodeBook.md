@@ -60,6 +60,7 @@ The variable names can be read as follows:
 * ‘mean’ is the mean value
 * ‘std’ is the Standard deviation
 
+```
 	tBodyAcc.mean...X      
 	tBodyAcc.mean...Y           
 	tBodyAcc.mean...Z           

@@ -2,15 +2,6 @@
 
 The data comes from experiments that have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities wearing a smartphone (Samsung Galaxy S II) on the waist. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.
 
-### Activity
-	Activity performed by the participant
-		Laying
-		Sitting
-		Standing
-		Walking
-		Walking Downstairs
-		Walking Upstairs
-
 The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. The acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ).
 
 Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).
@@ -20,7 +11,24 @@ Finally a Fast Fourier Transform (FFT) was applied to some of these signals prod
 These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-# Features
+### Subject
+
+Subject number
+
+	1…30 participant identifier in the experiment
+	
+### Activity
+	
+Activity performed by the participant
+
+	Laying
+	Sitting
+	Standing
+	Walking
+	Walking Downstairs
+	Walking Upstairs
+
+### Features
 
 Each feature variable has the following characteristics:
 
@@ -101,9 +109,9 @@ fBodyGyro.std...Y
 fBodyGyro.std...Z          
 fBodyAccMag.mean..          
 fBodyAccMag.std..           
-fBodyBodyAccJerkMag.mean.. 
+fBodyBodyAccJerkMag.mean..
 fBodyBodyAccJerkMag.std..   
 fBodyBodyGyroMag.mean..     
 fBodyBodyGyroMag.std..     
-fBodyBodyGyroJerkMag.mean.. 
+fBodyBodyGyroJerkMag.mean..
 fBodyBodyGyroJerkMag.std..
